@@ -1,0 +1,14 @@
+* jsonresume-nix
+A repository to package jsonresume themes, validate they work and make it
+easy to build jsonresume documents with nix.
+
+** TODO Things to do [0/9]
+- [ ] Wrapper script to package themes
+- [ ] Wrapper script to update themes
+- [ ] Wrapper script to test themes
+- [ ] Expose themes as packages in flake
+- [ ] Expose resumed as package in flake
+- [ ] Add a flake check that tests all themes
+- [ ] Add a flake output to test end users resumes and themes builds as flake checks
+- [ ] Add a flake output to use as flake init for end users resumes repositories
+- [ ] Add CI to update flake and themes
