@@ -13,6 +13,10 @@
   }:
     {
       # Flake outputs
+      templates.default = {
+        path = ./template;
+        description = "Template to build jsonresume with nix";
+      };
     }
     // flake-utils.lib.eachDefaultSystem (system: let
       pkgs = nixpkgs.legacyPackages.${system};
