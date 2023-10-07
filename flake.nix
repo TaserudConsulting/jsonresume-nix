@@ -34,6 +34,14 @@
 
       # Expose packages for themes and resumed used
       packages = let
+        nix-to-json = pkgs.writeScript "nix-to-json" ''
+          #!${pkgs.stdenv.shell}
+          set -eou pipefail
+
+          echo "Converting ./resume.nix to resume.json" 1>&2
+          ${pkgs.nix}/bin/nix-instantiate --eval -E 'builtins.toJSON (import ./resume.nix)' | ${pkgs.jq}/bin/jq -r > resume.json
+        '';
+
         buildThemeBuilder = themeName: let
           themePkg = pkgs.callPackage ./themes/jsonresume-theme-${themeName} {};
         in
@@ -41,13 +49,26 @@
             #!${pkgs.stdenv.shell}
             set -eou pipefail
 
+            # Convert resume.nix to resume.json
+            ${nix-to-json}
+
+            # Validate resume.json
             ${pkgs.resumed}/bin/resumed validate
 
+            # Render resume.json
             ${pkgs.resumed}/bin/resumed render \
               --theme ${themePkg}/lib/node_modules/jsonresume-theme-${themeName}/index.js
+
+            # Remove resume.json
+            rm resume.json
           '';
       in {
-        resumed = pkgs.resumed;
+        inherit nix-to-json;
+
+        # Resumed package used
+        inherit (pkgs) resumed;
+
+        # Themes
         resumed-elegant = buildThemeBuilder "elegant";
         resumed-fullmoon = buildThemeBuilder "fullmoon";
         resumed-kendall = buildThemeBuilder "kendall";
