@@ -44,6 +44,7 @@
           '';
       in {
         resumed = pkgs.resumed;
+        resumed-elegant = buildThemeBuilder "elegant";
         resumed-fullmoon = buildThemeBuilder "fullmoon";
         resumed-macchiato = buildThemeBuilder "macchiato";
         resumed-stackoverflow = buildThemeBuilder "stackoverflow";
