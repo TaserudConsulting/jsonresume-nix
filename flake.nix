@@ -29,6 +29,7 @@
       };
 
       packages = {
+        jsonresume-theme-macchiato = pkgs.callPackage ./themes/jsonresume-theme-macchiato {};
         jsonresume-theme-stackoverflow = pkgs.callPackage ./themes/jsonresume-theme-stackoverflow {};
       };
     });
