@@ -1,3 +1,10 @@
 # Ignore build symlinks
 result*
 .tmp
+
+# Ignore temporary files for when doing manual tests with themes
+node_modules/
+package-lock.json
+package.json
+resume.html
+resume.json
