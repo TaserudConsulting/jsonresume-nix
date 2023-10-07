@@ -46,6 +46,7 @@
         resumed = pkgs.resumed;
         resumed-elegant = buildThemeBuilder "elegant";
         resumed-fullmoon = buildThemeBuilder "fullmoon";
+        resumed-kendall = buildThemeBuilder "kendall";
         resumed-macchiato = buildThemeBuilder "macchiato";
         resumed-stackoverflow = buildThemeBuilder "stackoverflow";
       };
