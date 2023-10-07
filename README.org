@@ -12,3 +12,17 @@ easy to build jsonresume documents with nix.
 - [ ] Add a flake output to test end users resumes and themes builds as flake checks
 - [ ] Add a flake output to use as flake init for end users resumes repositories
 - [ ] Add CI to update flake and themes
+
+** Finding and testing more themes before packaging them
+https://www.npmjs.com/search?q=jsonresume-theme
+
+Find the theme name, then run ~npm install jsonresume-theme-THEMENAME~, this
+should install the theme in your local directory (given that you have
+~nodejs~ available, use ~nix-shell~ for this).
+
+Then you should be able to use ~nix-shell~ to make ~resumed~ available as
+well and test the theme by running:
+: resumed render --theme $(pwd)/node_modules/jsonresume-theme-THEMENAME/index.js
+
+The full path seems to be super important here. If this works you can attempt
+to package it and expose it in the flake.
