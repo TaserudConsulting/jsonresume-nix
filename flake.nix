@@ -28,10 +28,24 @@
         ];
       };
 
-      packages = {
+      # Expose packages for themes and resumed used
+      packages = let
+        buildThemeBuilder = themeName: let
+          themePkg = pkgs.callPackage ./themes/jsonresume-theme-${themeName} {};
+        in
+          pkgs.writeScript "resumed-render-wrapped-${themeName}-${themePkg.version}" ''
+            #!${pkgs.stdenv.shell}
+            set -eou pipefail
+
+            ${pkgs.resumed}/bin/resumed validate
+
+            ${pkgs.resumed}/bin/resumed render \
+              --theme ${themePkg}/lib/node_modules/jsonresume-theme-${themeName}/index.js
+          '';
+      in {
         resumed = pkgs.resumed;
-        jsonresume-theme-macchiato = pkgs.callPackage ./themes/jsonresume-theme-macchiato {};
-        jsonresume-theme-stackoverflow = pkgs.callPackage ./themes/jsonresume-theme-stackoverflow {};
+        resumed-macchiato = buildThemeBuilder "macchiato";
+        resumed-stackoverflow = buildThemeBuilder "stackoverflow";
       };
     });
 }
