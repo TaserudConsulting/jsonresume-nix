@@ -27,5 +27,9 @@
           pkgs.nodejs
         ];
       };
+
+      packages = {
+        jsonresume-theme-stackoverflow = pkgs.callPackage ./themes/jsonresume-theme-stackoverflow {};
+      };
     });
 }
