@@ -1,6 +1,6 @@
 * jsonresume-nix
-A repository to package jsonresume themes, validate they work and make it
-easy to build jsonresume documents with nix.
+A repository to package [[https://jsonresume.org/][jsonresume]] themes, validate they work and make it
+easy to build [[https://jsonresume.org/][jsonresume]] documents with nix.
 
 This also allows to specify the schema in nix rather than JSON to have nice
 things, such as variables, comments and so on.
