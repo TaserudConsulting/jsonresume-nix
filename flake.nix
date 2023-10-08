@@ -34,8 +34,7 @@
 
       # Expose packages for themes and resumed used
       packages = let
-        nix-to-json = pkgs.writeScript "nix-to-json" ''
-          #!${pkgs.stdenv.shell}
+        nix-to-json = pkgs.writeShellScript "nix-to-json" ''
           set -eou pipefail
 
           echo "Converting ./resume.nix to resume.json" 1>&2
@@ -45,8 +44,7 @@
         buildThemeBuilder = themeName: let
           themePkg = pkgs.callPackage ./themes/jsonresume-theme-${themeName} {};
         in
-          pkgs.writeScript "resumed-render-wrapped-${themeName}-${themePkg.version}" ''
-            #!${pkgs.stdenv.shell}
+          pkgs.writeShellScript "resumed-render-wrapped-${themeName}-${themePkg.version}" ''
             set -eou pipefail
 
             # Convert resume.nix to resume.json
