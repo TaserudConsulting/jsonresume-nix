@@ -28,6 +28,6 @@
       # nix flake show github:TaserudConsulting/jsonresume-nix
       #
       # If you miss a theme, consider opening a pull request :)
-      defaultPackage = jsonresume-nix.packages.${system}.resumed-elegant;
+      defaultPackage = jsonresume-nix.packages.${system}.resumed-fullmoon;
     });
 }
