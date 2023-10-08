@@ -172,5 +172,10 @@
     canonical = "https://raw.githubusercontent.com/jsonresume/resume-schema/master/resume.json";
     version = "v1.0.0";
     lastModified = "2017-12-24T15:53:00";
+
+    # Set default theme when fetching through
+    # https://registry.jsonresume.org/<github-user-name>, see themes
+    # here: https://jsonresume.org/themes/
+    theme = "papirus";
   };
 }
