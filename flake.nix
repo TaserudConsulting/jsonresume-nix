@@ -39,6 +39,9 @@
 
           echo "Converting ./resume.nix to resume.json" 1>&2
           ${pkgs.nix}/bin/nix-instantiate --eval -E 'builtins.toJSON (import ./resume.nix)' | ${pkgs.jq}/bin/jq -r > resume.json
+
+          # Validate resume.json
+          ${pkgs.resumed}/bin/resumed validate
         '';
 
         buildThemeBuilder = themeName: let
@@ -49,9 +52,6 @@
 
             # Convert resume.nix to resume.json
             ${nix-to-json}
-
-            # Validate resume.json
-            ${pkgs.resumed}/bin/resumed validate
 
             # Render resume.json
             ${pkgs.resumed}/bin/resumed render \
