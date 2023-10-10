@@ -2,8 +2,16 @@
 A repository to package [[https://jsonresume.org/][jsonresume]] themes, validate they work and make it
 easy to build [[https://jsonresume.org/][jsonresume]] documents with nix.
 
-This also allows to specify the schema in nix rather than JSON to have nice
-things, such as variables, comments and so on.
+This also allows to specify the schema in other formats than just the
+original JSON format.
+
+Formats supported:
+ - Nix (that gets evaluated into the JSON schema)
+ - TOML (that gets parsed into the JSON schema)
+ - JSON (just the original JSON format)
+
+Using this project makes it possible to have reproducible builds of certain
+themes for easy deployments on Github pages.
 
 ** Getting started
 Create your own ~resume~ repository and run

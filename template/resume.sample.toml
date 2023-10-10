@@ -1,0 +1,133 @@
+"$schema" = "https://raw.githubusercontent.com/jsonresume/resume-schema/v1.0.0/schema.json"
+
+
+[basics]
+email = "richard.hendriks@example.com"
+image = ""
+label = "Programmer"
+name = "Richard Hendriks"
+phone = "(912) 555-4321"
+summary = "Richard hails from Tulsa. He has earned degrees from the University of Oklahoma and Stanford. (Go Sooners and Cardinal!) Before starting Pied Piper, he worked for Hooli as a part time software developer. While his work focuses on applied information theory, mostly optimizing lossless compression schema of both the length-limited and adaptive variants, his non-work interests range widely, everything from quantum computing to chaos theory. He could tell you about it, but THAT would NOT be a “length-limited” conversation!"
+url = "http://richardhendricks.example.com"
+
+  [basics.location]
+  address = "2712 Broadway St"
+  city = "San Francisco"
+  countryCode = "US"
+  postalCode = "CA 94115"
+  region = "California"
+
+  [[basics.profiles]]
+  network = "Twitter"
+  url = ""
+  username = "neutralthoughts"
+
+  [[basics.profiles]]
+  network = "SoundCloud"
+  url = "https://soundcloud.example.com/dandymusicnl"
+  username = "dandymusicnl"
+
+
+[[work]]
+description = "Awesome compression company"
+endDate = "2014-12-01"
+highlights = [
+  "Build an algorithm for artist to detect if their music was violating copy right infringement laws",
+  "Successfully won Techcrunch Disrupt",
+  "Optimized an algorithm that holds the current world record for Weisman Scores"
+]
+location = "Palo Alto, CA"
+name = "Pied Piper"
+position = "CEO/President"
+startDate = "2013-12-01"
+summary = "Pied Piper is a multi-platform technology based on a proprietary universal compression algorithm that has consistently fielded high Weisman Scores™ that are not merely competitive, but approach the theoretical limit of lossless compression."
+url = "http://piedpiper.example.com"
+
+
+[[volunteer]]
+endDate = "2013-01-01"
+highlights = [ "Awarded 'Teacher of the Month'" ]
+organization = "CoderDojo"
+position = "Teacher"
+startDate = "2012-01-01"
+summary = "Global movement of free coding clubs for young people."
+url = "http://coderdojo.example.com/"
+
+
+[[education]]
+area = "Information Technology"
+courses = [ "DB1101 - Basic SQL", "CS2011 - Java Introduction" ]
+endDate = "2014-01-01"
+institution = "University of Oklahoma"
+score = "4.0"
+startDate = "2011-06-01"
+studyType = "Bachelor"
+url = "https://example.com/"
+
+
+[[awards]]
+awarder = "Techcrunch"
+date = "2014-11-01"
+summary = "There is no spoon."
+title = "Digital Compression Pioneer Award"
+
+
+[[publications]]
+name = "Video compression for 3d media"
+publisher = "Hooli"
+releaseDate = "2014-10-01"
+summary = "Innovative middle-out compression algorithm that changes the way we store data."
+url = "http://en.wikipedia.org/wiki/Silicon_Valley_(TV_series)"
+
+
+[[skills]]
+keywords = [ "HTML", "CSS", "Javascript" ]
+level = "Master"
+name = "Web Development"
+
+[[skills]]
+keywords = [ "Mpeg", "MP4", "GIF" ]
+level = "Master"
+name = "Compression"
+
+
+[[languages]]
+fluency = "Native speaker"
+language = "English"
+
+
+[[interests]]
+keywords = [ "Ferrets", "Unicorns" ]
+name = "Wildlife"
+
+
+[[references]]
+name = "Erlich Bachman"
+reference = "It is my pleasure to recommend Richard, his performance working as a consultant for Main St. Company proved that he will be a valuable addition to any company."
+
+
+[[projects]]
+description = "A mapping engine that misguides you"
+endDate = "2016-08-24"
+entity = "Smoogle"
+highlights = [
+  "Won award at AIHacks 2016",
+  "Built by all women team of newbie programmers",
+  "Using modern technologies such as GoogleMaps, Chrome Extension and Javascript"
+]
+keywords = [ "GoogleMaps", "Chrome Extension", "Javascript" ]
+name = "Miss Direction"
+roles = [ "Team lead", "Designer" ]
+startDate = "2016-08-24"
+type = "application"
+url = "missdirection.example.com"
+
+
+[meta]
+canonical = "https://raw.githubusercontent.com/jsonresume/resume-schema/master/resume.json"
+lastModified = "2017-12-24T15:53:00"
+version = "v1.0.0"
+# Set default theme when fetching through
+# https://registry.jsonresume.org/<github-user-name>, see themes
+# here: https://jsonresume.org/themes/
+theme = "papirus"
