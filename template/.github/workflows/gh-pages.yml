@@ -9,6 +9,10 @@ name: Update Github Pages
 jobs:
   update-resume-gist:
     runs-on: ubuntu-latest
+    permissions:
+      # This makes sure that this action has permissions to push to
+      # the gh-pages branch.
+      contents: "write"
     steps:
       - name: Checkout Repository
         uses: actions/checkout@v4
@@ -23,11 +27,6 @@ jobs:
       - run: |
           mkdir -p out/ && mv resume.html out/index.html
 
-      #
-      # For this to work on new repositories you'd seem to have to go
-      # to the "repository settings" -> "Actions" -> "General" ->
-      # "Workflow permissions" and select "Read and write permissions"
-      #
       - name: Deploy
         uses: peaceiris/actions-gh-pages@v3
         with:
