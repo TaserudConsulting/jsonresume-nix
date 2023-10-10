@@ -38,7 +38,9 @@
           set -eou pipefail
 
           echo "Converting ./resume.nix to resume.json" 1>&2
-          ${pkgs.nix}/bin/nix-instantiate --eval -E 'builtins.toJSON (import ./resume.nix)' | ${pkgs.jq}/bin/jq -r > resume.json
+          ${pkgs.nix}/bin/nix-instantiate --eval -E 'builtins.toJSON (import ./resume.nix)' \
+            | ${pkgs.jq}/bin/jq -r \
+            | ${pkgs.jq}/bin/jq > resume.json
 
           # Validate resume.json
           ${pkgs.resumed}/bin/resumed validate
