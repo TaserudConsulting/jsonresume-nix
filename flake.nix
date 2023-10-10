@@ -71,9 +71,6 @@
             # Render resume.json
             ${pkgs.resumed}/bin/resumed render \
               --theme ${themePkg}/lib/node_modules/jsonresume-theme-${themeName}/index.js
-
-            # Remove resume.json
-            rm resume.json
           '';
       in {
         inherit nix-to-json;
