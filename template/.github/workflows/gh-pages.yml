@@ -21,13 +21,10 @@ jobs:
       - uses: DeterminateSystems/magic-nix-cache-action@v2
 
       - run: |
-          nix build .#builder && ./result
-
-      - run: |
-          mkdir -p out/ && mv resume.html out/index.html
+          nix build . -L
 
       - name: Deploy
         uses: peaceiris/actions-gh-pages@v3
         with:
           github_token: ${{ secrets.GITHUB_TOKEN }}
-          publish_dir: ./out
+          publish_dir: ./result

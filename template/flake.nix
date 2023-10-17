@@ -29,6 +29,18 @@
       packages = {
         builder = jsonresume-nix.packages.${system}.resumed-fullmoon;
         inherit (jsonresume-nix.packages.${system}) fmt-as-json;
+
+        # Build production build
+        #
+        # This may need customizations, such as using the correct file
+        # format and copying other resources (such as images).
+        default = pkgs.runCommand "resume" {} ''
+          ln -s ${./resume.nix} resume.nix
+          HOME=$(mktemp -d) ${self.packages.${system}.builder}
+          mkdir $out
+          cp -v resume.html $out/index.html
+          # Copy other resources such as images here...
+        '';
       };
 
       # Allows to run a live preview server using "nix run .#live"
