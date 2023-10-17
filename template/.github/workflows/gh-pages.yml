@@ -21,7 +21,7 @@ jobs:
       - uses: DeterminateSystems/magic-nix-cache-action@v2
 
       - run: |
-          nix build .# && ./result
+          nix build .#builder && ./result
 
       - run: |
           mkdir -p out/ && mv resume.html out/index.html
