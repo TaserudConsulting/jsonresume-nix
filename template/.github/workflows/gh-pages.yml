@@ -7,7 +7,7 @@ name: Update Github Pages
       - main
 
 jobs:
-  update-resume-gist:
+  update-resume-pages:
     runs-on: ubuntu-latest
     permissions:
       # This makes sure that this action has permissions to push to
