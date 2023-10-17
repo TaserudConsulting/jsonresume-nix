@@ -1,16 +1,14 @@
 {
   description = "jsonresume-nix";
 
-  inputs = {
-    flake-utils.url = "flake-utils";
-  };
+  inputs.flake-utils.url = "flake-utils";
 
   outputs = {
     self,
     flake-utils,
     nixpkgs,
     ...
-  }:
+  } @ inputs:
     {
       # Flake outputs
       templates.default = {
@@ -88,5 +86,6 @@
         resumed-macchiato = buildThemeBuilder "macchiato";
         resumed-stackoverflow = buildThemeBuilder "stackoverflow";
       };
-    });
+    })
+    // {inherit inputs;};
 }
