@@ -37,6 +37,13 @@ to list available packages you just run:
 
 Then nix will list available theme wrappers.
 
+### Live preview when building your resume
+
+If you want a live preview of how the final result will look while
+filling out your resume schema file, run the following command:
+
+    nix run .#live
+
 ## [TODO] Things to do
 
 - [ ] Wrapper script to package themes
