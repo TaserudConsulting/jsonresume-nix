@@ -1,12 +1,9 @@
 {
   description = "Your personal jsonresume built with Nix";
 
-  inputs = {
-    jsonresume-nix.url = "github:TaserudConsulting/jsonresume-nix";
-    jsonresume-nix.inputs.flake-utils.follows = "flake-utils";
-
-    flake-utils.url = "flake-utils";
-  };
+  inputs.jsonresume-nix.url = "github:TaserudConsulting/jsonresume-nix";
+  inputs.jsonresume-nix.inputs.flake-utils.follows = "flake-utils";
+  inputs.flake-utils.url = "flake-utils";
 
   outputs = {
     jsonresume-nix,
@@ -14,7 +11,7 @@
     flake-utils,
     nixpkgs,
     ...
-  }:
+  } @ inputs:
     flake-utils.lib.eachDefaultSystem (system: let
       pkgs = nixpkgs.legacyPackages.${system};
     in {
@@ -30,7 +27,8 @@
       # If you miss a theme, consider opening a pull request :)
       packages = {
         default = jsonresume-nix.packages.${system}.resumed-fullmoon;
-        inherit (jsonresume-nix.packages.${system}) nix-to-json;
+        inherit (jsonresume-nix.packages.${system}) fmt-as-json;
       };
-    });
+    })
+    // {inherit inputs;};
 }

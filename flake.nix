@@ -34,7 +34,7 @@
 
       # Expose packages for themes and resumed used
       packages = let
-        nix-to-json = pkgs.writeShellScript "nix-to-json" ''
+        fmt-as-json = pkgs.writeShellScript "fmt-as-json" ''
           set -eou pipefail
 
           if test -e "./resume.nix"; then
@@ -66,14 +66,17 @@
             set -eou pipefail
 
             # Convert resume.nix to resume.json
-            ${nix-to-json}
+            ${fmt-as-json}
 
             # Render resume.json
             ${pkgs.resumed}/bin/resumed render \
               --theme ${themePkg}/lib/node_modules/jsonresume-theme-${themeName}/index.js
           '';
       in {
-        inherit nix-to-json;
+        inherit fmt-as-json;
+
+        # Kept for compatibility due to rename from nix-to-json to fmt-as-json
+        nix-to-json = fmt-as-json;
 
         # Resumed package used
         inherit (pkgs) resumed;
