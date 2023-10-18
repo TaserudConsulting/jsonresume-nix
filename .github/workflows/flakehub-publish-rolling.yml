@@ -4,19 +4,19 @@ name: "Publish every Git push to main to FlakeHub"
 'on':
   push:
     branches:
-      - "main"
+      - main
 
 jobs:
   flakehub-publish:
-    runs-on: "ubuntu-latest"
+    runs-on: ubuntu-latest
     permissions:
       id-token: "write"
       contents: "read"
     steps:
-      - uses: "actions/checkout@v4.1.0"
-      - uses: "DeterminateSystems/nix-installer-action@v6"
-      - uses: "DeterminateSystems/flakehub-push@v3"
+      - uses: actions/checkout@v4.1.0
+      - uses: DeterminateSystems/nix-installer-action@v6
+      - uses: DeterminateSystems/flakehub-push@v3
         with:
-          name: "TaserudConsulting/jsonresume-nix"
+          name: TaserudConsulting/jsonresume-nix
           rolling: true
-          visibility: "public"
+          visibility: public
