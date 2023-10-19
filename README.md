@@ -24,12 +24,11 @@ Create your own `resume` repository and run
 
 to clone the template to use this flake.
 
-In there you get a `defaultPackage` that determines the theme to
-use. To build it you can just run `nix build .#builder` and execute
-the result like `./result` which will build `resume.nix` into a HTML
-output. Note that it's required that this `flake.nix` is part of a git
-repository and that you at least stage the `flake.nix` file to be able
-to build.
+In there you get a `builder` that determines the theme to use. To
+build it you can just run `nix build .#builder` and execute the result
+like `./result` which will build `resume.nix` into a HTML output. Note
+that it's required that this `flake.nix` is part of a git repository
+and that you at least stage the `flake.nix` file to be able to build.
 
 To change the theme used you'd just change the `defaultPackage` used,
 to list available packages you just run:
