@@ -157,7 +157,7 @@
     }
   ],
   "meta": {
-    "canonical": "https://raw.githubusercontent.com/jsonresume/resume-schema/master/resume.json",
+    "canonical": "https://raw.githubusercontent.com/jsonresume/resume-schema/master/schema.json",
     "lastModified": "2017-12-24T15:53:00",
     "theme": "papirus",
     "version": "v1.0.0"
