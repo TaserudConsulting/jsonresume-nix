@@ -81,6 +81,7 @@
 
         # Themes
         resumed-elegant = buildThemeBuilder "elegant";
+        resumed-full = buildThemeBuilder "full";
         resumed-fullmoon = buildThemeBuilder "fullmoon";
         resumed-kendall = buildThemeBuilder "kendall";
         resumed-macchiato = buildThemeBuilder "macchiato";
