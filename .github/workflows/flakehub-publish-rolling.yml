@@ -1,5 +1,5 @@
 ---
-name: "Publish every Git push to main to FlakeHub"
+name: Publish every Git push to main to FlakeHub
 
 'on':
   push:
@@ -8,12 +8,12 @@ name: "Publish every Git push to main to FlakeHub"
 
 jobs:
   flakehub-publish:
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-22.04
     permissions:
-      id-token: "write"
-      contents: "read"
+      id-token: write
+      contents: read
     steps:
-      - uses: actions/checkout@v4.1.1
+      - uses: actions/checkout@v4
       - uses: DeterminateSystems/nix-installer-action@v6
       - uses: DeterminateSystems/flakehub-push@v3
         with:

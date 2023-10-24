@@ -8,11 +8,9 @@ name: Update Resume Gist
 
 jobs:
   update-resume-gist:
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-22.04
     steps:
-      - name: Checkout Repository
-        uses: actions/checkout@v4
-
+      - uses: actions/checkout@v4
       - uses: DeterminateSystems/nix-installer-action@v6
       - uses: DeterminateSystems/magic-nix-cache-action@v2
 
