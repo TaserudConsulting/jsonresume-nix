@@ -20,3 +20,6 @@ jobs:
         run: 'nix run nixpkgs#yamllint -- --strict --format github .'
       - name: Check deadnix file formatting ❄️
         run: 'nix run nixpkgs#deadnix -- --fail .'
+
+      - name: Check flake ❄️
+        run: nix flake check

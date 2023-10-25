@@ -51,7 +51,7 @@ filling out your resume schema file, run the following command:
 - [ ] Wrapper script to test themes
 - [X] Expose themes as packages in flake
 - [X] Expose resumed as package in flake
-- [ ] Add a flake check that tests all themes
+- [X] Add a flake check that tests all themes
 - [ ] Add a flake output to test end users resumes and themes builds
       as flake checks
 - [ ] Add a flake output to use as flake init for end users resumes

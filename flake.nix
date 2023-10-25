@@ -4,6 +4,7 @@
   inputs.flake-utils.url = "flake-utils";
 
   outputs = {
+    self,
     flake-utils,
     nixpkgs,
     ...
@@ -28,6 +29,44 @@
           pkgs.nodejs
         ];
       };
+
+      # Check output to run checks for all themes
+      checks.themes = let
+        builderAttrs =
+          pkgs.lib.filterAttrs
+          (name: _: pkgs.lib.strings.hasPrefix "resumed-" name)
+          self.packages.${system};
+      in
+        pkgs.stdenv.mkDerivation {
+          name = "themes-checks";
+          src = ./template;
+
+          buildPhase =
+            ''
+              cp resume.sample.json resume.json
+            ''
+            + (builtins.concatStringsSep "\n\n"
+              (pkgs.lib.attrValues (pkgs.lib.mapAttrs
+                (name: value: ''
+                  # Build using builder ${name}
+                  ${value}
+                  mv resume.html ${name}.html
+                '')
+                builderAttrs)));
+
+          installPhase =
+            ''
+              mkdir $out
+            ''
+            + (builtins.concatStringsSep "\n\n"
+              (pkgs.lib.attrValues (
+                pkgs.lib.mapAttrs
+                (name: _: ''
+                  mv ${name}.html $out
+                '')
+                builderAttrs
+              )));
+        };
 
       # Expose packages for themes and resumed used
       packages = let
