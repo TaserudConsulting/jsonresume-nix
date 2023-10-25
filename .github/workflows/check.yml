@@ -16,3 +16,5 @@ jobs:
 
       - name: Check nix file formatting ❄️
         run: 'nix fmt . -- --check'
+      - name: Check yaml file formatting 📂
+        run: 'nix run nixpkgs#yamllint -- --strict --format github .'
