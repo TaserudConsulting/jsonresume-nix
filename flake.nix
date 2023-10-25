@@ -4,7 +4,6 @@
   inputs.flake-utils.url = "flake-utils";
 
   outputs = {
-    self,
     flake-utils,
     nixpkgs,
     ...
