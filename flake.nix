@@ -111,9 +111,6 @@
       in {
         inherit fmt-as-json;
 
-        # Kept for compatibility due to rename from nix-to-json to fmt-as-json
-        nix-to-json = fmt-as-json;
-
         # Resumed package used
         inherit (pkgs) resumed;
 
