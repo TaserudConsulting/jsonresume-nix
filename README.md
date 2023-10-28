@@ -1,20 +1,20 @@
 # jsonresume-nix
+Build and deploy your résumé using [Nix](https://nixos.org/) and
+[jsonresume](https://jsonresume.org/) in a reproducible way. We
+provide some themes and make it easy to add more themes (pull requests
+are welcome).
 
-A repository to package [jsonresume](https://jsonresume.org/) themes,
-validate they work and make it easy to build
-[jsonresume](https://jsonresume.org/) documents with nix.
+We have a template to easily deploy it GitHub pages or using their
+hosted service where the JSON schema is hosted as a GitHub gist.
 
-This also allows to specify the schema in other formats than just the
-original JSON format.
+We also supports transforming into the JSON schema from other
+languages so you aren't used to a raw JSON format.
 
 Formats supported:
 
 - Nix (that gets evaluated into the JSON schema)
 - TOML (that gets parsed into the JSON schema)
 - JSON (just the original JSON format)
-
-Using this project makes it possible to have reproducible builds of
-certain themes for easy deployments on Github pages.
 
 ## Getting started
 
@@ -37,10 +37,10 @@ to list available packages you just run:
 
 Then nix will list available theme wrappers.
 
-### Live preview when building your resume
+### Live preview when building your résumé
 
 If you want a live preview of how the final result will look while
-filling out your resume schema file, run the following command:
+filling out your résumé schema file, run the following command:
 
     nix run .#live
 
@@ -52,9 +52,9 @@ filling out your resume schema file, run the following command:
 - [X] Expose themes as packages in flake
 - [X] Expose resumed as package in flake
 - [X] Add a flake check that tests all themes
-- [ ] Add a flake output to test end users resumes and themes builds
+- [ ] Add a flake output to test end users résumés and themes builds
       as flake checks
-- [ ] Add a flake output to use as flake init for end users resumes
+- [ ] Add a flake output to use as flake init for end users résumés
       repositories
 - [ ] Add CI to update flake and themes
 
