@@ -74,6 +74,7 @@
           set -eou pipefail
 
           yamlresume="$(${pkgs.lib.getExe pkgs.findutils} . \( -name 'resume.yaml' -o -name 'resume.yml' \) | head -1 || echo)"
+
           if test -e "./resume.nix"; then
             echo "Converting ./resume.nix to ./resume.json" 1>&2
             ${pkgs.nix}/bin/nix-instantiate --eval -E 'builtins.toJSON (import ./resume.nix)' \
