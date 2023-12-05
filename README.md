@@ -14,6 +14,7 @@ Formats supported:
 
 - Nix (that gets evaluated into the JSON schema)
 - TOML (that gets parsed into the JSON schema)
+- YAML (.yml or .yaml, that gets converted into the JSON schema)
 - JSON (just the original JSON format)
 
 ## Getting started
