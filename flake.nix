@@ -73,6 +73,7 @@
         fmt-as-json = pkgs.writeShellScript "fmt-as-json" ''
           set -eou pipefail
 
+          yamlresume="$(${pkgs.lib.getExe pkgs.findutils} . \( -name 'resume.yaml' -o -name 'resume.yml' \) | head -1 || echo)"
           if test -e "./resume.nix"; then
             echo "Converting ./resume.nix to ./resume.json" 1>&2
             ${pkgs.nix}/bin/nix-instantiate --eval -E 'builtins.toJSON (import ./resume.nix)' \
@@ -83,11 +84,14 @@
             ${pkgs.nix}/bin/nix-instantiate --eval -E 'builtins.toJSON (builtins.fromTOML (builtins.readFile ./resume.toml))' \
               | ${pkgs.jq}/bin/jq -r \
               | ${pkgs.jq}/bin/jq > resume.json
+          elif [[ $yamlresume != "" ]]; then
+            echo "Converting $yamlresume to ./resume.json" 1>&2
+            ${pkgs.lib.getExe pkgs.yq-go} -o=json '.' "$yamlresume" > resume.json
           elif test -e "./resume.json"; then
             echo "Found ./resume.json, not touching it" 1>&2
           else
             echo "No resume of any supported format found, currently looking for" 1>&2
-            echo "any of ./resume.(nix|toml|json)"                                1>&2
+            echo "any of ./resume.(nix|toml|json|yaml|yml)"                       1>&2
             exit 2
           fi
 
