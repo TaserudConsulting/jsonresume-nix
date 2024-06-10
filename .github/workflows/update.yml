@@ -16,7 +16,7 @@ jobs:
     steps:
       - uses: actions/checkout@v4
       - uses: DeterminateSystems/nix-installer-action@v11
-      - uses: DeterminateSystems/update-flake-lock@v21
+      - uses: DeterminateSystems/update-flake-lock@v22
         with:
           pr-title: "chore: update flake.lock"
           pr-labels: |
