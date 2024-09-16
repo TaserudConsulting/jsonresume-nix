@@ -15,7 +15,7 @@ jobs:
     steps:
       - uses: actions/checkout@v4
       - uses: DeterminateSystems/nix-installer-action@v14
-      - uses: DeterminateSystems/flakehub-push@v4
+      - uses: DeterminateSystems/flakehub-push@v5
         with:
           name: TaserudConsulting/jsonresume-nix
           rolling: true
