@@ -70,49 +70,64 @@
 
       # Expose packages for themes and resumed used
       packages = let
-        fmt-as-json = pkgs.writeShellScript "fmt-as-json" ''
-          set -eou pipefail
+        fmt-as-json = pkgs.writeShellApplication {
+          name = "fmt-as-json";
+          runtimeInputs = [
+            pkgs.findutils
+            pkgs.jq
+            pkgs.nix
+            pkgs.resumed
+            pkgs.yq-go
+          ];
+          text = ''
+            set -eou pipefail
 
-          yamlresume="$(${pkgs.lib.getExe pkgs.findutils} . \( -name 'resume.yaml' -o -name 'resume.yml' \) | head -1 || echo)"
+            yamlresume="$(find . \( -name 'resume.yaml' -o -name 'resume.yml' \) | head -1 || echo)"
 
-          if test -e "./resume.nix"; then
-            echo "Converting ./resume.nix to ./resume.json" 1>&2
-            ${pkgs.nix}/bin/nix-instantiate --eval -E 'builtins.toJSON (import ./resume.nix)' \
-              | ${pkgs.jq}/bin/jq -r \
-              | ${pkgs.jq}/bin/jq > resume.json
-          elif test -e "./resume.toml"; then
-            echo "Converting ./resume.toml to ./resume.json" 1>&2
-            ${pkgs.nix}/bin/nix-instantiate --eval -E 'builtins.toJSON (builtins.fromTOML (builtins.readFile ./resume.toml))' \
-              | ${pkgs.jq}/bin/jq -r \
-              | ${pkgs.jq}/bin/jq > resume.json
-          elif [[ $yamlresume != "" ]]; then
-            echo "Converting $yamlresume to ./resume.json" 1>&2
-            ${pkgs.lib.getExe pkgs.yq-go} -o=json '.' "$yamlresume" > resume.json
-          elif test -e "./resume.json"; then
-            echo "Found ./resume.json, not touching it" 1>&2
-          else
-            echo "No resume of any supported format found, currently looking for" 1>&2
-            echo "any of ./resume.(nix|toml|json|yaml|yml)"                       1>&2
-            exit 2
-          fi
+            if test -e "./resume.nix"; then
+              echo "Converting ./resume.nix to ./resume.json" 1>&2
+              nix-instantiate --eval -E 'builtins.toJSON (import ./resume.nix)' \
+                | jq -r \
+                | jq > resume.json
+            elif test -e "./resume.toml"; then
+              echo "Converting ./resume.toml to ./resume.json" 1>&2
+              nix-instantiate --eval -E 'builtins.toJSON (builtins.fromTOML (builtins.readFile ./resume.toml))' \
+                | jq -r \
+                | jq > resume.json
+            elif [[ $yamlresume != "" ]]; then
+              echo "Converting $yamlresume to ./resume.json" 1>&2
+              yq -o=json '.' "$yamlresume" > resume.json
+            elif test -e "./resume.json"; then
+              echo "Found ./resume.json, not touching it" 1>&2
+            else
+              echo "No resume of any supported format found, currently looking for" 1>&2
+              echo "any of ./resume.(nix|toml|json|yaml|yml)"                       1>&2
+              exit 2
+            fi
 
-          echo "Running validation of ./resume.json" 1>&2
-          ${pkgs.resumed}/bin/resumed validate
-        '';
+            echo "Running validation of ./resume.json" 1>&2
+            resumed validate
+          '';
+        };
 
         buildThemeBuilder = themeName: let
           themePkg = pkgs.callPackage ./themes/jsonresume-theme-${themeName} {};
         in
-          pkgs.writeShellScript "resumed-render-wrapped-${themeName}-${themePkg.version}" ''
-            set -eou pipefail
+          pkgs.writeShellApplication {
+            name = "resumed-render";
+            runtimeInputs = [
+              fmt-as-json
+              pkgs.resumed
+            ];
+            text = ''
+              # Convert resume.nix to resume.json
+              fmt-as-json
 
-            # Convert resume.nix to resume.json
-            ${fmt-as-json}
-
-            # Render resume.json
-            ${pkgs.resumed}/bin/resumed render \
-              --theme ${themePkg}/lib/node_modules/jsonresume-theme-${themeName}/index.js
-          '';
+              # Render resume.json
+              resumed render \
+                --theme ${themePkg}/lib/node_modules/jsonresume-theme-${themeName}/index.js
+            '';
+          };
       in {
         inherit fmt-as-json;
 

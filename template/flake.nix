@@ -46,16 +46,28 @@
       # Allows to run a live preview server using "nix run .#live"
       apps = {
         live.type = "app";
-        live.program = builtins.toString (pkgs.writeShellScript "entr-reload" ''
-          ${self.packages.${system}.builder}
+        live.program = (lib.getExe (pkgs.writeShellApplication {
+          name = "entr-reload";
+          runtimeInputs = [
+            pkgs.entr
+            pkgs.nodePackages.live-server
+            pkgs.xe
 
-          ${lib.getExe' pkgs.nodePackages.live-server "live-server"} \
-            --watch=resume.html --open=resume.html --wait=300 &
+            # Include the desired builders program that cointains `resumed-render`
+            self.packages.${system}.builder
+          ];
+          text = ''
+            resumed-render
 
-          printf "\n%s" resume.{toml,nix,json} |
-            ${lib.getExe pkgs.xe} -s 'test -f "$1" && echo "$1"' |
-            ${lib.getExe pkgs.entr} -p ${self.packages.${system}.builder}
-        '');
+            live-server --watch=resume.html --open=resume.html --wait=300 &
+
+            # We want to not expand $1 in the xe argument
+            # shellcheck disable=SC2016
+            printf "\n%s" resume.{toml,nix,json} |
+              xe -s 'test -f "$1" && echo "$1"' |
+              entr -p resumed-render
+          '';
+        }));
       };
     })
     // {inherit inputs;};
