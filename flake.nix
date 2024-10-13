@@ -116,6 +116,20 @@
 
       # Expose packages for themes and resumed used
       packages = let
+        # Shorthand for the buildThemeBuilder from lib
+        inherit (self.lib.${system}) buildThemeBuilder;
+      in {
+        # Resumed package used
+        inherit (pkgs) resumed;
+
+        # Themes
+        resumed-elegant = buildThemeBuilder "elegant";
+        resumed-full = buildThemeBuilder "full";
+        resumed-fullmoon = buildThemeBuilder "fullmoon";
+        resumed-kendall = buildThemeBuilder "kendall";
+        resumed-macchiato = buildThemeBuilder "macchiato";
+        resumed-stackoverflow = buildThemeBuilder "stackoverflow";
+
         fmt-as-json = pkgs.writeShellApplication {
           name = "fmt-as-json";
           runtimeInputs = [
@@ -155,21 +169,6 @@
             resumed validate
           '';
         };
-
-        inherit (self.lib.${system}) buildThemeBuilder;
-      in {
-        inherit fmt-as-json;
-
-        # Resumed package used
-        inherit (pkgs) resumed;
-
-        # Themes
-        resumed-elegant = buildThemeBuilder "elegant";
-        resumed-full = buildThemeBuilder "full";
-        resumed-fullmoon = buildThemeBuilder "fullmoon";
-        resumed-kendall = buildThemeBuilder "kendall";
-        resumed-macchiato = buildThemeBuilder "macchiato";
-        resumed-stackoverflow = buildThemeBuilder "stackoverflow";
       };
     })
     // {inherit inputs;};
