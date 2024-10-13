@@ -94,6 +94,33 @@
             '';
           };
 
+        buildPrintToPdf = {
+          builderDerivation,
+          format ? "A4",
+        }:
+          pkgs.writeShellApplication {
+            name = "print-to-pdf";
+            runtimeInputs = [
+              pkgs.puppeteer-cli
+              pkgs.nodePackages.live-server
+
+              # Include the desired builders program that cointains `resumed-render`
+              builderDerivation
+            ];
+            text = ''
+              PORT=$(shuf -i 2000-65000 -n 1)
+
+              resumed-render
+
+              live-server --host=127.0.0.1 --port="$PORT" --wait=300 --no-browser &
+              LIVE_SERVER_PID=$!
+
+              puppeteer print "http://127.0.0.1:$PORT/resume.html" resume.pdf --format ${format}
+
+              kill "$LIVE_SERVER_PID"
+            '';
+          };
+
         buildThemeBuilder = themeName: let
           themePkg = pkgs.callPackage ./themes/jsonresume-theme-${themeName} {};
         in

@@ -47,6 +47,11 @@
       apps = {
         live.type = "app";
         live.program = lib.getExe (jsonresume-nix.lib.${system}.buildLiveServer self.packages.${system}.builder);
+
+        print.type = "app";
+        print.program = lib.getExe (jsonresume-nix.lib.${system}.buildPrintToPdf {
+          builderDerivation = self.packages.${system}.builder;
+        });
       };
     })
     // {inherit inputs;};
