@@ -15,7 +15,7 @@ jobs:
       - uses: DeterminateSystems/magic-nix-cache-action@v2
 
       - run: |
-          nix build .#fmt-as-json && ./result
+          nix run .#fmt-as-json
 
       - name: Update Resume Gist
         uses: exuanbo/actions-deploy-gist@v1
