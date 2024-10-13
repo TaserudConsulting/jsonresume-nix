@@ -36,7 +36,7 @@
         # format and copying other resources (such as images).
         default = pkgs.runCommand "resume" {} ''
           ln -s ${./resume.nix} resume.nix
-          HOME=$(mktemp -d) ${self.packages.${system}.builder}
+          HOME=$(mktemp -d) ${lib.getExe self.packages.${system}.builder}
           mkdir $out
           cp -v resume.html $out/index.html
           # Copy other resources such as images here...
