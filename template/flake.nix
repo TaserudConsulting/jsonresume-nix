@@ -1,7 +1,7 @@
 {
   description = "Your personal jsonresume built with Nix";
 
-  inputs.jsonresume-nix.url = "github:TaserudConsulting/jsonresume-nix/builder";
+  inputs.jsonresume-nix.url = "github:TaserudConsulting/jsonresume-nix";
   inputs.jsonresume-nix.inputs.flake-utils.follows = "flake-utils";
   inputs.flake-utils.url = "flake-utils";
 
