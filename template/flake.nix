@@ -1,7 +1,7 @@
 {
   description = "Your personal jsonresume built with Nix";
 
-  inputs.jsonresume-nix.url = "github:TaserudConsulting/jsonresume-nix";
+  inputs.jsonresume-nix.url = "github:TaserudConsulting/jsonresume-nix/builder";
   inputs.jsonresume-nix.inputs.flake-utils.follows = "flake-utils";
   inputs.flake-utils.url = "flake-utils";
 
@@ -46,28 +46,7 @@
       # Allows to run a live preview server using "nix run .#live"
       apps = {
         live.type = "app";
-        live.program = (lib.getExe (pkgs.writeShellApplication {
-          name = "entr-reload";
-          runtimeInputs = [
-            pkgs.entr
-            pkgs.nodePackages.live-server
-            pkgs.xe
-
-            # Include the desired builders program that cointains `resumed-render`
-            self.packages.${system}.builder
-          ];
-          text = ''
-            resumed-render
-
-            live-server --watch=resume.html --open=resume.html --wait=300 &
-
-            # We want to not expand $1 in the xe argument
-            # shellcheck disable=SC2016
-            printf "\n%s" resume.{toml,nix,json} |
-              xe -s 'test -f "$1" && echo "$1"' |
-              entr -p resumed-render
-          '';
-        }));
+        live.program = (lib.getExe (jsonresume-nix.packages.${system}.buildLiveServer self.packages.${system}.builder));
       };
     })
     // {inherit inputs;};

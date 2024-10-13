@@ -128,8 +128,31 @@
                 --theme ${themePkg}/lib/node_modules/jsonresume-theme-${themeName}/index.js
             '';
           };
+
+          buildLiveServer = builderDerivation: pkgs.writeShellApplication {
+            name = "live-entr-reload-server";
+            runtimeInputs = [
+              pkgs.entr
+              pkgs.nodePackages.live-server
+              pkgs.xe
+
+              # Include the desired builders program that cointains `resumed-render`
+              builderDerivation
+            ];
+            text = ''
+              resumed-render
+
+              live-server --watch=resume.html --open=resume.html --wait=300 &
+
+              # We want to not expand $1 in the xe argument
+              # shellcheck disable=SC2016
+              printf "\n%s" resume.{toml,nix,json} |
+                xe -s 'test -f "$1" && echo "$1"' |
+                entr -p resumed-render
+            '';
+          };
       in {
-        inherit fmt-as-json;
+        inherit fmt-as-json buildLiveServer;
 
         # Resumed package used
         inherit (pkgs) resumed;
