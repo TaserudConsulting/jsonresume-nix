@@ -69,29 +69,50 @@
               )));
         };
 
-      lib.buildLiveServer = builderDerivation:
-        pkgs.writeShellApplication {
-          name = "live-entr-reload-server";
-          runtimeInputs = [
-            pkgs.entr
-            pkgs.nodePackages.live-server
-            pkgs.xe
+      lib = {
+        buildLiveServer = builderDerivation:
+          pkgs.writeShellApplication {
+            name = "live-entr-reload-server";
+            runtimeInputs = [
+              pkgs.entr
+              pkgs.nodePackages.live-server
+              pkgs.xe
 
-            # Include the desired builders program that cointains `resumed-render`
-            builderDerivation
-          ];
-          text = ''
-            resumed-render
+              # Include the desired builders program that cointains `resumed-render`
+              builderDerivation
+            ];
+            text = ''
+              resumed-render
 
-            live-server --watch=resume.html --open=resume.html --wait=300 &
+              live-server --watch=resume.html --open=resume.html --wait=300 &
 
-            # We want to not expand $1 in the xe argument
-            # shellcheck disable=SC2016
-            printf "\n%s" resume.{toml,nix,json} |
-              xe -s 'test -f "$1" && echo "$1"' |
-              entr -p resumed-render
-          '';
-        };
+              # We want to not expand $1 in the xe argument
+              # shellcheck disable=SC2016
+              printf "\n%s" resume.{toml,nix,json} |
+                xe -s 'test -f "$1" && echo "$1"' |
+                entr -p resumed-render
+            '';
+          };
+
+        buildThemeBuilder = themeName: let
+          themePkg = pkgs.callPackage ./themes/jsonresume-theme-${themeName} {};
+        in
+          pkgs.writeShellApplication {
+            name = "resumed-render";
+            runtimeInputs = [
+              self.packages.${system}.fmt-as-json
+              pkgs.resumed
+            ];
+            text = ''
+              # Convert resume.nix to resume.json
+              fmt-as-json
+
+              # Render resume.json
+              resumed render \
+                --theme ${themePkg}/lib/node_modules/jsonresume-theme-${themeName}/index.js
+            '';
+          };
+      };
 
       # Expose packages for themes and resumed used
       packages = let
@@ -135,24 +156,7 @@
           '';
         };
 
-        buildThemeBuilder = themeName: let
-          themePkg = pkgs.callPackage ./themes/jsonresume-theme-${themeName} {};
-        in
-          pkgs.writeShellApplication {
-            name = "resumed-render";
-            runtimeInputs = [
-              fmt-as-json
-              pkgs.resumed
-            ];
-            text = ''
-              # Convert resume.nix to resume.json
-              fmt-as-json
-
-              # Render resume.json
-              resumed render \
-                --theme ${themePkg}/lib/node_modules/jsonresume-theme-${themeName}/index.js
-            '';
-          };
+        inherit (self.lib.${system}) buildThemeBuilder;
       in {
         inherit fmt-as-json;
 
