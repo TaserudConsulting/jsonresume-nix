@@ -49,7 +49,7 @@
         live.program = builtins.toString (pkgs.writeShellScript "entr-reload" ''
           ${self.packages.${system}.builder}
 
-          ${lib.getExe pkgs.nodePackages.live-server} \
+          ${lib.getExe' pkgs.nodePackages.live-server "live-server"} \
             --watch=resume.html --open=resume.html --wait=300 &
 
           printf "\n%s" resume.{toml,nix,json} |
