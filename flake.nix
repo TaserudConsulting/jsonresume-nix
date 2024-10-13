@@ -129,7 +129,8 @@
             '';
           };
 
-          buildLiveServer = builderDerivation: pkgs.writeShellApplication {
+        buildLiveServer = builderDerivation:
+          pkgs.writeShellApplication {
             name = "live-entr-reload-server";
             runtimeInputs = [
               pkgs.entr

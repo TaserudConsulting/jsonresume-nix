@@ -46,7 +46,7 @@
       # Allows to run a live preview server using "nix run .#live"
       apps = {
         live.type = "app";
-        live.program = (lib.getExe (jsonresume-nix.packages.${system}.buildLiveServer self.packages.${system}.builder));
+        live.program = lib.getExe (jsonresume-nix.packages.${system}.buildLiveServer self.packages.${system}.builder);
       };
     })
     // {inherit inputs;};
