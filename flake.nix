@@ -18,6 +18,7 @@
     }
     // flake-utils.lib.eachDefaultSystem (system: let
       pkgs = nixpkgs.legacyPackages.${system};
+      lib = pkgs.lib;
     in {
       # Specify formatter package for "nix fmt ." and "nix fmt . -- --check"
       formatter = pkgs.alejandra;
@@ -33,8 +34,8 @@
       # Check output to run checks for all themes
       checks.themes = let
         builderAttrs =
-          pkgs.lib.filterAttrs
-          (name: _: pkgs.lib.strings.hasPrefix "resumed-" name)
+          lib.filterAttrs
+          (name: _: lib.strings.hasPrefix "resumed-" name)
           self.packages.${system};
       in
         pkgs.stdenv.mkDerivation {
@@ -46,10 +47,10 @@
               cp resume.sample.json resume.json
             ''
             + (builtins.concatStringsSep "\n\n"
-              (pkgs.lib.attrValues (pkgs.lib.mapAttrs
+              (lib.attrValues (lib.mapAttrs
                 (name: value: ''
                   # Build using builder ${name}
-                  ${value}
+                  ${lib.getExe value}
                   mv resume.html ${name}.html
                 '')
                 builderAttrs)));
@@ -59,13 +60,37 @@
               mkdir $out
             ''
             + (builtins.concatStringsSep "\n\n"
-              (pkgs.lib.attrValues (
-                pkgs.lib.mapAttrs
+              (lib.attrValues (
+                lib.mapAttrs
                 (name: _: ''
                   mv ${name}.html $out
                 '')
                 builderAttrs
               )));
+        };
+
+      lib.buildLiveServer = builderDerivation:
+        pkgs.writeShellApplication {
+          name = "live-entr-reload-server";
+          runtimeInputs = [
+            pkgs.entr
+            pkgs.nodePackages.live-server
+            pkgs.xe
+
+            # Include the desired builders program that cointains `resumed-render`
+            builderDerivation
+          ];
+          text = ''
+            resumed-render
+
+            live-server --watch=resume.html --open=resume.html --wait=300 &
+
+            # We want to not expand $1 in the xe argument
+            # shellcheck disable=SC2016
+            printf "\n%s" resume.{toml,nix,json} |
+              xe -s 'test -f "$1" && echo "$1"' |
+              entr -p resumed-render
+          '';
         };
 
       # Expose packages for themes and resumed used
@@ -128,32 +153,8 @@
                 --theme ${themePkg}/lib/node_modules/jsonresume-theme-${themeName}/index.js
             '';
           };
-
-        buildLiveServer = builderDerivation:
-          pkgs.writeShellApplication {
-            name = "live-entr-reload-server";
-            runtimeInputs = [
-              pkgs.entr
-              pkgs.nodePackages.live-server
-              pkgs.xe
-
-              # Include the desired builders program that cointains `resumed-render`
-              builderDerivation
-            ];
-            text = ''
-              resumed-render
-
-              live-server --watch=resume.html --open=resume.html --wait=300 &
-
-              # We want to not expand $1 in the xe argument
-              # shellcheck disable=SC2016
-              printf "\n%s" resume.{toml,nix,json} |
-                xe -s 'test -f "$1" && echo "$1"' |
-                entr -p resumed-render
-            '';
-          };
       in {
-        inherit fmt-as-json buildLiveServer;
+        inherit fmt-as-json;
 
         # Resumed package used
         inherit (pkgs) resumed;
