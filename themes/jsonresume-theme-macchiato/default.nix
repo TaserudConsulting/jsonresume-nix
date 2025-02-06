@@ -1,6 +1,7 @@
 {
   buildNpmPackage,
   fetchFromGitHub,
+  fetchpatch,
   python3,
 }: let
   pname = "jsonresume-theme-macchiato";
@@ -17,6 +18,13 @@ in
     };
 
     npmDepsHash = "sha256-yK7Yp2580XiGv1nHmyBnnF7dLlADOP8NWLvuzAMclOo=";
+
+    patches = [
+      (fetchpatch {
+        url = "https://patch-diff.githubusercontent.com/raw/biosan/jsonresume-theme-macchiato/pull/22.patch";
+        hash = "sha256-sq5gOiY35uJF7k0Hxx19VMh1Gn9i2lWAlbNAgqBboHM=";
+      })
+    ];
 
     nativeBuildInputs = [python3];
     dontNpmBuild = true;
