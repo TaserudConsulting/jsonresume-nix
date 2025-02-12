@@ -1,5 +1,6 @@
 let Resume =
-      https://raw.githubusercontent.com/gaelreyrol/dhall-resume/3de451af096eb2c1df20f7c88f2dd6d05a72187e/package.dhall
+      https://raw.githubusercontent.com/gaelreyrol/dhall-resume/2a062f75eeb03db3faefd1c0c4d4fe5aaa825af1/package.dhall
+        sha256:69712ee8d2cc1d4375238c20169d74962286d860bb06ab583baa39e48c018f35
 
 let schema =
       "https://raw.githubusercontent.com/jsonresume/resume-schema/v1.0.0/schema.json"
