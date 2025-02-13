@@ -165,6 +165,7 @@
             pkgs.nix
             pkgs.resumed
             pkgs.yq-go
+            pkgs.dhall-json
           ];
           text = ''
             set -eou pipefail
@@ -181,6 +182,9 @@
               nix-instantiate --eval -E 'builtins.toJSON (builtins.fromTOML (builtins.readFile ./resume.toml))' \
                 | jq -r \
                 | jq > resume.json
+            elif test -e "./resume.dhall"; then
+              echo "Converting ./resume.dhall to ./resume.json" 1>&2
+              dhall-to-json --file ./resume.dhall --output resume.json
             elif [[ $yamlresume != "" ]]; then
               echo "Converting $yamlresume to ./resume.json" 1>&2
               yq -o=json '.' "$yamlresume" > resume.json
@@ -188,7 +192,7 @@
               echo "Found ./resume.json, not touching it" 1>&2
             else
               echo "No resume of any supported format found, currently looking for" 1>&2
-              echo "any of ./resume.(nix|toml|json|yaml|yml)"                       1>&2
+              echo "any of ./resume.(nix|toml|json|yaml|yml|dhall)"                 1>&2
               exit 2
             fi
 
