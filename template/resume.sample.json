@@ -16,7 +16,7 @@
     "profiles": [
       {
         "network": "Twitter",
-        "url": "",
+        "url": "https://example.com/foobar",
         "username": "neutralthoughts"
       },
       {
@@ -153,7 +153,7 @@
       ],
       "startDate": "2016-08-24",
       "type": "application",
-      "url": "missdirection.example.com"
+      "url": "https://missdirection.example.com"
     }
   ],
   "meta": {

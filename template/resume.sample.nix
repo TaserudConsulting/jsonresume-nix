@@ -20,7 +20,7 @@
       {
         network = "Twitter";
         username = "neutralthoughts";
-        url = "";
+        url = "https://example.com/foobar";
       }
       {
         network = "SoundCloud";
@@ -158,7 +158,7 @@
       ];
       startDate = "2016-08-24";
       endDate = "2016-08-24";
-      url = "missdirection.example.com";
+      url = "https://missdirection.example.com";
       roles = [
         "Team lead"
         "Designer"

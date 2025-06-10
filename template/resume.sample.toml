@@ -19,7 +19,7 @@ url = "http://richardhendricks.example.com"
 
   [[basics.profiles]]
   network = "Twitter"
-  url = ""
+  url = "https://example.com/foobar"
   username = "neutralthoughts"
 
   [[basics.profiles]]
@@ -120,7 +120,7 @@ name = "Miss Direction"
 roles = [ "Team lead", "Designer" ]
 startDate = "2016-08-24"
 type = "application"
-url = "missdirection.example.com"
+url = "https://missdirection.example.com"
 
 
 [meta]

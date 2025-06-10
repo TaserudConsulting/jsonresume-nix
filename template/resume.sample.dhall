@@ -23,6 +23,7 @@ in  Resume.Basic::{
         [ Resume.Profile::{
           , network = Some "Twitter"
           , username = Some "neutralthoughts"
+          , url = Some "https://example.com/foobar"
           }
         , Resume.Profile::{
           , network = Some "SoundCloud"
@@ -140,7 +141,7 @@ in  Resume.Basic::{
         , keywords = Some [ "GoogleMaps", "Chrome Extension", "Javascript" ]
         , roles = Some [ "Team lead", "Designer" ]
         , type = Some "application"
-        , url = Some "missdirection.example.com"
+        , url = Some "https://missdirection.example.com"
         }
       ]
     , meta = Some Resume.Meta::{

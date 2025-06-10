@@ -15,7 +15,7 @@ basics:
   phone: "(912) 555-4321"
   profiles:
     - network: Twitter
-      url: ''
+      url: https://example.com/foobar
       username: neutralthoughts
     - network: SoundCloud
       url: https://soundcloud.example.com/dandymusicnl
@@ -138,7 +138,7 @@ projects:
       - Designer
     startDate: '2016-08-24'
     type: application
-    url: missdirection.example.com
+    url: https://missdirection.example.com
 
 meta:
   canonical: https://raw.githubusercontent.com/jsonresume/resume-schema/master/schema.json

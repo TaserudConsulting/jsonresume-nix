@@ -30,6 +30,11 @@ in
     dontNpmBuild = true;
     PUPPETEER_SKIP_CHROMIUM_DOWNLOAD = 1;
 
+    # Delete broken symlinks
+    fixupPhase = ''
+      find . -xtype l -delete || true
+    '';
+
     meta = {
       description = "Simple JSONResume theme (based on Caffeine theme) ☕️+🥛";
       homepage = "https://github.com/biosan/jsonresume-theme-macchiato";

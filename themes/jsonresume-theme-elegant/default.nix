@@ -18,6 +18,11 @@ in
     npmDepsHash = "sha256-3GrHcwfu0rIPQ6e6SFa8Ve3VqL/KcEBRru9oAPAVGmo=";
     dontNpmBuild = true;
 
+    # Delete broken symlinks
+    fixupPhase = ''
+      find . -xtype l -delete || true
+    '';
+
     meta = {
       description = "Elegant theme for jsonresume";
       homepage = "https://github.com/mudassir0909/jsonresume-theme-elegant";
